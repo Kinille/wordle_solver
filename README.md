@@ -1,5 +1,12 @@
 # Wordle Solver
 
+## Usage
+* Run solver.py in a terminal emulator
+* The program gives you a guess to try
+* Give the program the colors that were given back i.e. GGXYY for Green, Green, Blac, Yellow, Yellow
+* The Program will relatively quickly give you a new guess to try that should be close to optimal (I hope)
+
+## Background
 Currently this project is very much a work in progress. As a weekend project I started messing around with a few different strategies to try to solve wordle in as few guesses as possible
 
 The wordlist in resources/five_letters.txt was retrieved by first getting the 1/3 million most common words frequency list located [here.](https://norvig.com/ngrams/count_1w.txt)
