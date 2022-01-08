@@ -20,7 +20,9 @@ import numpy as np
 import copy
 from loguru import logger
 
+logger.remove()
 best_start_word = "adieu"
+
 
 with open('resources/five_letters.txt', 'r') as fd:
     POSSIBLE_WORDS = fd.read().splitlines()
@@ -126,17 +128,17 @@ def entropy_maximizing_guess(possible_words, required_chars, black_set, yellow_s
     #    scores = new_scores
     best = min(scores, key=lambda x: x[0])
     if len(scores) < 20:
-        print(scores)
+        logger.info(scores)
     else:
-        print(len(scores))
-        print(scores[:10])
+        logger.info(len(scores))
+        logger.info(scores[:10])
     if scores[0] == 1.0:
         best_list = [pair for pair in scores if pair[0] == 1.0]
         for pair in best_list:
             if pair[1] in possible_words:
                 best = pair
                 break
-    print(f'The guess {best[1]} has a score of {best[0]}')
+    logger.info(f'The guess {best[1]} has a score of {best[0]}')
     return best[1]
 
 
@@ -215,30 +217,23 @@ def main():
             if word == "smock":
                 debug = True
             if not black_check_possible(black_set, word):
-                if debug:
-                    print('here1')
                 continue
             if not required_check_possible(required_chars, word):
-                if debug:
-                    print('here2')
                 continue
             if not yellow_check_possible(yellow_set, word):
-                if debug:
-                    print('here3')
                 continue
             if not green_check_possible(green_set, word):
-                if debug:
-                    print('here4')
                 continue
             new_possible_words.append(word)
         possible_words = new_possible_words
-        print(f'{green_set=}')
-        print(f'{yellow_set=}')
-        print(f'{black_set=}')
-        print(f'{possible_words=}')
+        logger.debug(f'{green_set=}')
+        logger.debug(f'{yellow_set=}')
+        logger.debug(f'{black_set=}')
+        logger.debug(f'{possible_words=}')
         print()
         print(f'There are now {len(possible_words)} possible words left')
         print(f'The most likely is: {possible_words[0]}')
+        print(f'Loading, please wait...')
         if len(possible_words) > 500:
             s = unknown_letter_maximizing_guess(yellow_set, black_set, possible_words)
             guess = s
